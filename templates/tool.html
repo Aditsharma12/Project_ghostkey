@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #121212;
+        color: #f5f5f5;
+    }
+
+    .tool-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #1e1e1e;
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(255,255,255,0.05);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="file"], input[type="text"], input[type="password"], textarea {
+        width: 100%;
+        padding: 10px;
+        background-color: #2a2a2a;
+        color: #f5f5f5;
+        border-radius: 8px;
+        border: 1px solid #444;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message {
+        background-color: #661515;
+        color: #fdd;
+        padding: 10px;
+        border-left: 5px solid red;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .hint-box {
+        background-color: #2b2b2b;
+        padding: 10px;
+        border-left: 4px solid #666;
+        margin-top: 10px;
+        border-radius: 6px;
+        color: #ccc;
+    }
+
+    .field-hint {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 5px;
+    }
+
+    .result-box {
+        margin-top: 30px;
+        padding: 15px;
+        background-color: #202020;
+        border-radius: 10px;
+    }
+
+    .preview img, .preview audio {
+        max-width: 100%;
+        margin-top: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+
+    .download-btn {
+        display: inline-block;
+        padding: 10px 15px;
+        margin-top: 15px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .copy-btn {
+        margin-top: 10px;
+        padding: 6px 12px;
+        border: none;
+        background-color: #444;
+        color: #fff;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .image-preview-container {
+        margin-top: 30px;
+        border: 2px solid #444;
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #1e1e1e;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+    }
+
+    .image-wrapper img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+</style>
+
+<div class="tool-container">
+    <h2>{{ mode.replace('-', ' ').title() }}</h2>
+
+    {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+            {% if 'invalid keyword' in error.lower() or 'missing shape file' in error.lower() %}
+                <div class="hint-box">
+                    <p class="hint">Possible solutions:</p>
+                    <ul>
+                        <li>Ensure you're using the <strong>exact same password</strong> used during encryption</li>
+                        <li>Make sure you have the matching <strong>.npy shape file</strong></li>
+                        <li>The file might be corrupted or not encrypted with this tool</li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% if mode in ['image-encrypt', 'image-decrypt', 'audio-encrypt', 'audio-decrypt'] %}
+            <div class="form-group">
+                <label for="file">
+                    {% if mode in ['image-encrypt', 'image-decrypt'] %}Select Image:{% endif %}
+                    {% if mode == 'audio-encrypt' %}Select Image to Convert:{% endif %}
+                    {% if mode == 'audio-decrypt' %}Select Audio File:{% endif %}
+                </label>
+                <input type="file" id="file" name="file" required accept="{% if 'image' in mode %}image/*{% else %}audio/*{% endif %}">
+            </div>
+        {% endif %}
+
+        {% if mode == 'audio-decrypt' %}
+            <div class="form-group">
+                <label for="shape_file">Upload Shape File (.npy):</label>
+                <input type="file" id="shape_file" name="shape_file" required accept=".npy">
+                <p class="field-hint">This was downloaded during encryption</p>
+            </div>
+        {% endif %}
+
+        {% if mode in ['text-encrypt', 'text-decrypt', 'image-encrypt'] %}
+            <div class="form-group">
+                <label for="text">
+                    {% if mode == 'text-encrypt' %}Text to encrypt:{% endif %}
+                    {% if mode == 'text-decrypt' %}Text to decrypt:{% endif %}
+                    {% if mode == 'image-encrypt' %}Message to hide:{% endif %}
+                </label>
+                {% if mode in ['text-encrypt', 'text-decrypt'] %}
+                    <textarea id="text" name="text" required>{{ request.form.text if request.form.text else '' }}</textarea>
+                {% else %}
+                    <input type="text" id="text" name="text" required value="{{ request.form.text if request.form.text else '' }}">
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="keyword">Secret Keyword:</label>
+            <input type="password" id="keyword" name="keyword" required value="{{ request.form.keyword if request.form.keyword else '' }}">
+            <p class="field-hint">Remember this - it cannot be recovered if lost!</p>
+        </div>
+
+        <button type="submit">
+            {% if 'encrypt' in mode %}Encrypt{% else %}Decrypt{% endif %}
+        </button>
+    </form>
+
+    {% if result %}
+        <div class="result-box">
+            <h3>Result:</h3>
+            <div class="result-content">
+                <pre>{{ result }}</pre>
+                <button onclick="copyToClipboard('{{ result }}')" class="copy-btn">Copy</button>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if output_audio %}
+        <div class="result-box">
+            <h3>Encryption Successful!</h3>
+            <div class="download-group">
+                <a href="/download/{{ output_audio }}" download class="download-btn">Download Audio File (.wav)</a>
+                <a href="/download-shape/{{ output_audio }}" download class="download-btn">Download Shape File (.npy)</a>
+            </div>
+            <div class="preview">
+                <audio controls src="/static/uploads/{{ output_audio }}"></audio>
+            </div>
+            <div class="hint-box">
+                <p>⚠️ <strong>Important:</strong> Save BOTH files to decrypt later!</p>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if output_image %}
+        <div class="image-preview-container">
+            <h3>Decrypted Image Preview:</h3>
+            <div class="image-wrapper">
+                <img src="{{ url_for('static', filename='uploads/' + output_image) }}" alt="Recovered Image">
+            </div>
+            <a href="{{ url_for('download', filename=output_image) }}" class="download-btn mt-2">Download Recovered Image</a>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Copied to clipboard!');
+        });
+    }
+</script>
+{% endblock %}

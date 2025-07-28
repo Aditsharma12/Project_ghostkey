@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="tool-container">
+        <h2 style="text-align: center; border-bottom: 1px solid var(--neon-pink); padding-bottom: 1rem; margin-bottom: 3rem;">Project Architect</h2>
+
+        <!-- Developer Profile Card -->
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <div class="profile-details">
+                <h3>Adit Sharma</h3>
+                <p class="role">Lead Developer & encryptor </p>
+                <div class="details-grid">
+                    <div>
+                        <span class="label">College</span>
+                        <span class="value">KIET Group of Institutions</span>
+                    </div>
+                    <div>
+                        <span class="label">Stream</span>
+                        <span class="value">Computer Science (2nd Year)</span>
+                    </div>
+                    <div>
+                        <span class="label">Secure Channel:</span>
+                        <span class="value">aditsharma2005.vs@gmail.com</span>
+                    </div>
+                    <div>
+                        <span class="label">Geographic Node:</span>
+                        <span class="value">Najibabad, Uttar Pradesh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Description -->
+        <div class="project-brief">
+            <h3 style="color: var(--neon-blue);">Project Briefing</h3>
+            <p>
+                <strong>Project Ghostkey</strong> is a conceptual suite developed as a personal project to explore the fusion of high-strength cryptography and modern steganographic techniques. It represents an academic exploration into dual-layer data security, designed, architected, and coded by a single operative.
+            </p>
+            <p>
+                This application serves as a practical demonstration of theoretical security concepts learned by me.
+            </p>
+            <p style="text-align: right; margin-top: 2rem; font-size: 0.9rem; color: var(--text-secondary);">
+                 updated: Sunday, 27 July 2025, 2:48 PM IST
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- These styles are specific to this page and won't affect other pages -->
+<style>
+    /* UPDATED: Profile card now has the glass frost effect */
+    .profile-card {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        background: rgba(13, 2, 33, 0.4);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 221, 255, 0.3);
+        border-left: 3px solid var(--neon-pink);
+        margin-bottom: 3rem;
+    }
+    .profile-avatar {
+        font-size: 7rem;
+        color: var(--neon-blue);
+        text-shadow: 0 0 20px var(--neon-blue);
+        line-height: 1;
+    }
+    .profile-details h3 {
+        margin: 0;
+        font-size: 2.5rem;
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+    .profile-details .role {
+        margin: 0.2rem 0 1.5rem 0;
+        font-size: 1.1rem;
+        color: var(--neon-pink);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+    .details-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        font-size: 1.1rem;
+    }
+    .details-grid .label {
+        color: var(--neon-blue);
+        font-weight: 600;
+        margin-right: 10px;
+    }
+    .details-grid .value {
+        color: var(--text-primary);
+        word-break: break-all;
+    }
+    /* UPDATED: Project brief is now its own glass container */
+    .project-brief {
+        line-height: 1.7;
+        font-size: 1.1rem;
+        background: rgba(13, 2, 33, 0.4);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 221, 255, 0.3);
+    }
+    @media (max-width: 768px) {
+        .profile-card {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
+        .profile-details h3 {
+            font-size: 2rem;
+        }
+        .details-grid {
+            text-align: left;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="tool-container">
+        <h2 style="text-align: center; border-bottom: 1px solid var(--neon-pink); padding-bottom: 1rem; margin-bottom: 3rem;">Support the Mission</h2>
+
+        <!-- Introduction Section -->
+        <div class="donate-section">
+            <div class="donate-icon">
+                <i class="fas fa-satellite-dish"></i>
+            </div>
+            <div class="donate-text">
+                <h3>Direct Transmission</h3>
+                <p>Project Ghostkey is a project driven by passion and curiosity. Your support helps cover server costs, domain registration, and fuels future development and research into new security protocols.</p>
+                <p>Every contribution, no matter the size, is a direct signal of support that keeps this project operational and evolving.</p>
+            </div>
+        </div>
+
+        <!-- UPI Section -->
+        <div class="upi-container">
+            <h3>UPI Transmissions</h3>
+            <p>For direct support, you can use the following UPI ID or scan the QR code with any UPI-enabled application (Google Pay, PhonePe, Paytm, etc.).</p>
+            <div class="upi-details">
+                <div class="upi-id-wrapper">
+                    <span class="upi-label">UPI ID:</span>
+                    <!-- IMPORTANT: Replace the value with your actual UPI ID -->
+                    <input type="text" id="upiId" value="aditsharma2005.vs@oksbi" readonly>
+                    <button onclick="copyUpiId()" class="copy-btn" title="Copy UPI ID"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- These styles are specific to this page -->
+<style>
+    .donate-section {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        background: rgba(13, 2, 33, 0.4);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 221, 255, 0.3);
+        margin-bottom: 2rem;
+    }
+    .donate-icon {
+        font-size: 4rem;
+        color: var(--neon-blue);
+    }
+    .donate-text h3 {
+        margin: 0 0 1rem 0;
+        font-size: 1.8rem;
+        color: var(--neon-pink);
+    }
+    .donate-text p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--text-primary);
+    }
+    .upi-container {
+        background: rgba(13, 2, 33, 0.4);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 221, 255, 0.3);
+        text-align: center;
+    }
+    .upi-container h3 {
+        margin: 0 0 1rem 0;
+        font-size: 1.8rem;
+        color: var(--neon-blue);
+    }
+    .upi-details {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    .upi-id-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(0,0,0,0.4);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        max-width: 100%;
+        width: 350px;
+    }
+    .upi-id-wrapper .upi-label {
+        font-weight: 600;
+        color: var(--text-secondary);
+        white-space: nowrap;
+    }
+    #upiId {
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        width: 100%;
+        outline: none;
+    }
+    .copy-btn {
+        background: var(--neon-blue);
+        color: var(--dark-bg);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 0.5rem 0.7rem;
+        line-height: 1;
+        transition: background 0.2s ease;
+    }
+    .copy-btn:hover {
+        background: white;
+    }
+    .qr-code-wrapper img {
+        border-radius: 8px;
+        border: 2px solid var(--neon-blue);
+        width: 200px;
+        height: 200px;
+    }
+    .qr-scan-text {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+        .donate-section {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+    @media (max-width: 480px) {
+        .upi-id-wrapper {
+            width: 100%;
+        }
+    }
+</style>
+
+<!-- Page-specific script -->
+<script>
+    function copyUpiId() {
+        const upiInput = document.getElementById('upiId');
+        // A modern way to copy text that works on most browsers
+        navigator.clipboard.writeText(upiInput.value).then(() => {
+            alert('UPI ID Copied: ' + upiInput.value);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            // Fallback for older browsers
+            try {
+                upiInput.select();
+                document.execCommand('copy');
+                alert('UPI ID Copied: ' + upiInput.value);
+            } catch (fallbackErr) {
+                alert('Failed to copy UPI ID.');
+            }
+        });
+    }
+</script>
+{% endblock %}

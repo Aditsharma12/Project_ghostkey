@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="tool-container">
+        <h2 style="text-align: center; border-bottom: 1px solid var(--neon-pink); padding-bottom: 1rem; margin-bottom: 3rem;">Field Operative Guide</h2>
+
+        <!-- Introduction Section -->
+        <div class="guide-section">
+            <div class="guide-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="guide-text">
+                <h3>Mission Parameters</h3>
+                <p>This guide outlines the operational procedures for the Ghostkey suite. Each tool provides a layer of security through encryption or concealment. Correct procedure is critical for data integrity.</p>
+            </div>
+        </div>
+
+        <!-- Text Tools Section -->
+        <div class="guide-section">
+            <div class="guide-icon">
+                <i class="fas fa-file-signature"></i>
+            </div>
+            <div class="guide-text">
+                <h3>Protocol: Text Encryption & Decryption</h3>
+                <ol>
+                    <li>Select <strong>Text Encrypt</strong> or <strong>Text Decrypt</strong> from the tool dial.</li>
+                    <li>Input the text into the designated data field.</li>
+                    <li>Provide a secure, memorable keyword. <strong>This keyword is your only key.</strong></li>
+                    <li>Execute the task. The output will be the encrypted/decrypted text.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Image Tools Section -->
+        <div class="guide-section">
+            <div class="guide-icon">
+                <i class="fas fa-file-image"></i>
+            </div>
+            <div class="guide-text">
+                <h3>Protocol: Image Steganography</h3>
+                <ol>
+                    <li><strong>To Encrypt:</strong> Select <strong>Image Encrypt</strong>. Choose an image file, type the secret message to hide, and provide a keyword. The output will be a new image containing the hidden message.</li>
+                    <li><strong>To Decrypt:</strong> Select <strong>Image Decrypt</strong>. Upload the image that contains the hidden data and provide the exact same keyword used to encrypt it.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Audio Tools Section -->
+        <div class="guide-section">
+            <div class="guide-icon">
+                <i class="fas fa-waveform-lines"></i>
+            </div>
+            <div class="guide-text">
+                <h3>Protocol: Audio Steganography (Advanced)</h3>
+                 <ol>
+                    <li><strong>To Encrypt:</strong> Select <strong>Audio Encrypt</strong>. Choose an image file to convert into an audio signal, and provide a keyword.</li>
+                    <li>You will receive two files: a <strong>.WAV audio file</strong> and a critical <strong>.NPY shape file</strong>. <strong>You must save both files.</strong></li>
+                    <li><strong>To Decrypt:</strong> Select <strong>Audio Decrypt</strong>. Upload the <strong>.WAV audio file</strong>, the corresponding <strong>.NPY shape file</strong>, and the correct keyword to recover the original image.</li>
+                </ol>
+                <p style="color: var(--neon-pink); margin-top: 1rem;"><strong>Critical Warning:</strong> The .NPY file is essential for decryption. Loss of this file will result in permanent data loss.</p>
+            </div>
+        </div>
+
+        <p style="text-align: right; margin-top: 2rem; font-size: 0.9rem; color: var(--text-secondary);">
+            Guide updated: Monday, July 28, 2025, 1:46 PM IST
+        </p>
+    </div>
+</div>
+
+<!-- These styles are specific to this page and won't affect other pages -->
+<style>
+    .guide-section {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start; /* Aligns items to the top */
+        background: rgba(13, 2, 33, 0.4);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 221, 255, 0.3);
+        margin-bottom: 2rem;
+    }
+    .guide-icon {
+        font-size: 3rem;
+        color: var(--neon-blue);
+        line-height: 1;
+        margin-top: 0.5rem;
+    }
+    .guide-text h3 {
+        margin: 0 0 1rem 0;
+        font-size: 1.8rem;
+        color: var(--neon-pink);
+    }
+    .guide-text p, .guide-text li {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--text-primary);
+    }
+    .guide-text ol {
+        padding-left: 20px;
+    }
+    .guide-text ol li {
+        margin-bottom: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+        .guide-section {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .guide-text h3 {
+            font-size: 1.5rem;
+        }
+        .guide-text ol {
+            text-align: left;
+        }
+    }
+</style>
+{% endblock %}

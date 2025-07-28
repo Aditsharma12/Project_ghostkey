@@ -1,0 +1,190 @@
+/*
+================================================
+  CRYPTOSTEG - FINAL VERSION (MOBILE FIX)
+================================================
+*/
+:root {
+  --neon-blue: #00ddff;
+  --neon-pink: #ff005e;
+  --neon-purple: #b300ff;
+  --dark-bg: #03040a;
+  --panel-bg: rgba(13, 2, 33, 0.85);
+  --text-primary: #eaf2f8;
+  --border-color: rgba(0, 221, 255, 0.2);
+}
+
+body {
+  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  margin: 0; padding: 0;
+  overflow-x: hidden;
+}
+
+.background-zoom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url('/static/textures/nebula.jpg');
+  background-size: cover;
+  background-position: center;
+  animation: zoom-in-out 15s ease-in-out infinite alternate;
+}
+
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13, 2, 33, 0.6);
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+header h1 {
+  font-weight: 700; font-size: 2.5rem; color: var(--text-primary);
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0 0 0;
+}
+nav a {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.6rem 1.6rem;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 221, 255, 0.3);
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 5px rgba(0, 221, 255, 0.1);
+}
+nav a:hover {
+    background: rgba(0, 221, 255, 0.2);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue);
+    color: white;
+}
+
+main { padding: 2rem 1rem; }
+
+.content-wrapper {
+    animation: fadeIn 0.8s 0.2s both;
+}
+
+/* --- RADIAL MENU STYLING --- */
+.radial-menu {
+  /* Default for DESKTOP: Fixed to center */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 400px; height: 400px;
+  display: flex; justify-content: center; align-items: center;
+  --radius: 160px;
+  --item-size: 80px;
+  z-index: 1;
+}
+
+.menu-center {
+  position: relative; width: 90px; height: 90px;
+  background: var(--panel-bg);
+  border-radius: 50%;
+  border: 2px solid var(--neon-blue);
+  z-index: 10; cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 221, 255, 0.5);
+  transition: transform 0.2s ease-out;
+}
+.menu-center:hover { transform: scale(1.1); }
+.menu-item {
+  position: absolute; width: var(--item-size); height: var(--item-size);
+  background: var(--panel-bg);
+  border-radius: 50%;
+  border: 1px solid var(--neon-pink);
+  display: flex; justify-content: center; align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 0, 94, 0.7);
+  opacity: 0;
+  transform: scale(0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0.5, 0.2, 1.4);
+  transition-delay: calc(var(--i) * 0.05s);
+  text-decoration: none;
+}
+.menu-item i {
+  font-size: 32px;
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink);
+  transition: all 0.3s ease;
+}
+.menu-item:hover i {
+  transform: scale(1.15);
+  color: var(--neon-blue);
+  text-shadow: 0 0 15px var(--neon-blue);
+}
+.menu-item .tooltip {
+  position: absolute;
+  bottom: -40px;
+  background: rgba(0,0,0,0.9);
+  color: var(--neon-blue);
+  padding: 5px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.menu-item:hover .tooltip { opacity: 1; transform: translateY(0); }
+.radial-menu.open .menu-item { opacity: 1; transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(-1 * var(--angle))); }
+.radial-menu.open .menu-item:hover { background: var(--neon-pink); border-color: var(--neon-pink); z-index: 20; transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(-1 * var(--angle))) scale(1.1); }
+.menu-center .icon { position: absolute; top: 50%; left: 50%; width: 40%; height: 2px; background-color: var(--neon-blue); transition: all 0.3s ease-in-out; }
+.menu-center .icon::before { content: ''; position: absolute; width: 100%; height: 100%; background-color: inherit; transform: rotate(90deg); transition: all 0.3s ease-in-out; }
+.radial-menu.open .menu-center .icon { transform: translateX(-50%) translateY(-50%) rotate(135deg); }
+.radial-menu.open .menu-center .icon::before { transform: rotate(90deg) scaleX(1); }
+.menu-center .icon { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+.menu-center .icon::before { transform: rotate(90deg) scaleX(0); }
+
+@keyframes zoom-in-out {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+    /* For Tablets and smaller */
+    .radial-menu {
+        position: relative; /* Un-fix the dial from the screen */
+        top: auto;
+        left: auto;
+        transform: scale(0.8); /* Scale it down a bit */
+        margin: 3rem auto; /* Center it within the page content flow */
+    }
+}
+
+@media (max-width: 480px) {
+    /* For small mobile phones */
+    .radial-menu {
+        transform: scale(0.75); /* Further scale it down */
+        margin: 2rem auto;
+    }
+}

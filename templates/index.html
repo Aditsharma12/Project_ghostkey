@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- This wrapper is needed for proper mobile positioning -->
+<div class="content-wrapper">
+    <div class="radial-menu">
+        <div class="menu-center">
+            <div class="icon"></div>
+        </div>
+
+        <a href="/tool/text-encrypt" class="menu-item" style="--i:0; --angle: 0deg;">
+            <i class="fas fa-lock"></i>
+            <span class="tooltip">Text Encrypt</span>
+        </a>
+        <a href="/tool/text-decrypt" class="menu-item" style="--i:1; --angle: 60deg;">
+            <i class="fas fa-key"></i>
+            <span class="tooltip">Text Decrypt</span>
+        </a>
+        <a href="/tool/image-encrypt" class="menu-item" style="--i:2; --angle: 120deg;">
+            <i class="fas fa-file-image"></i>
+            <span class="tooltip">Image Encrypt</span>
+        </a>
+        <a href="/tool/image-decrypt" class="menu-item" style="--i:3; --angle: 180deg;">
+            <i class="fas fa-unlock"></i>
+            <span class="tooltip">Image Decrypt</span>
+        </a>
+        <a href="/tool/audio-encrypt" class="menu-item" style="--i:4; --angle: 240deg;">
+            <i class="fas fa-sliders"></i>
+            <span class="tooltip">Audio Encrypt</span>
+        </a>
+        <a href="/tool/audio-decrypt" class="menu-item" style="--i:5; --angle: 300deg;">
+            <i class="fas fa-circle-play"></i>
+            <span class="tooltip">Audio Decrypt</span>
+        </a>
+    </div>
+</div>
+{% endblock %}
